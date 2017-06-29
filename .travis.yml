@@ -23,11 +23,11 @@ env:
 script:
   - docker --version
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; elif [ "$TRAVIS_BRANCH" == "integration" ]; then bash <(curl https://raw.githubusercontent.com/KenSciML/InternalTools/ci-tools/increment_version.sh?token=AEwy07AxYEiyUfwEr-VhJsirAA_W9Vebks5ZXBDwwA%3D%3D) -p "$(<VERSION)"  ; else echo $TRAVIS_BRANCH ; fi`
-  - echo "$(<VERSION)"
+  - echo $TAG
 
 after_success:
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "integration" ]; then git config user.email "travis@travis-ci.org" ; git config user.name "Travis CI" ; echo $TAG > VERSION ; git add VERSION ; git commit -m "[Travis-CI] Build $TRAVIS_BUILD_NUMBER [ci skip]" ; git push ; fi
-  - if [ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]; then git config user.email "travis@travis-ci.org" ; git config user.name "Travis CI" ; git commit -m "[Travis-CI] Build $TRAVIS_BUILD_NUMBER [ci skip]" ; git push ; fi
   - echo "$(<VERSION)"
   - echo "$TRAVIS_PULL_REQUEST"
   - echo "$TRAVIS_BRANCH"
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "integration" ]; then git config user.email "travis@travis-ci.org" ; git config user.name "Travis CI" ; echo $TAG > VERSION ; git add VERSION ; git commit -m "[Travis-CI] Build $TRAVIS_BUILD_NUMBER [ci skip]" ; git push ; fi
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then git config user.email "travis@travis-ci.org" ; git config user.name "Travis CI" ; git commit -m "[Travis-CI] Build $TRAVIS_BUILD_NUMBER [ci skip]" ; git push ; fi
