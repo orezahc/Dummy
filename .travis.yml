@@ -29,3 +29,5 @@ after_success:
   - if [ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "integration" ]; then git config user.email "travis@travis-ci.org" ; git config user.name "Travis CI" ; echo $TAG > VERSION ; git add VERSION ; git commit -m "[Travis-CI] Build $TRAVIS_BUILD_NUMBER [ci skip]" ; git push ; fi
   - if [ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_BRANCH" == "master" ]; then git config user.email "travis@travis-ci.org" ; git config user.name "Travis CI" ; git commit -m "[Travis-CI] Build $TRAVIS_BUILD_NUMBER [ci skip]" ; git push ; fi
   - echo "$(<VERSION)"
+  - echo "$TRAVIS_PULL_REQUEST"
+  - echo "$TRAVIS_BRANCH"
